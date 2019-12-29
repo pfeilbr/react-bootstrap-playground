@@ -1,11 +1,15 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Container,
   Row,
   Col,
+  Breadcrumb,
   Button,
   CardGroup,
   CardColumns,
@@ -13,6 +17,8 @@ import {
 } from "react-bootstrap";
 
 const buttonLabel = "Hi Brian";
+
+const About = () => <h1>about</h1>;
 
 const MyHelloComponent = props => {
   return <h1>{props.msg}</h1>;
@@ -83,13 +89,37 @@ const UserProfiles = () => {
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Container>
-        <CardColumns>
-          <UserProfiles />
-        </CardColumns>
+        <div>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to="/">Home</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/about">About</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/users">Users</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+
+          <Switch>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/users">
+              <CardColumns>
+                <UserProfiles />
+              </CardColumns>
+            </Route>
+            <Route path="/">
+              <MyHelloComponent msg="Home Here" />
+            </Route>
+          </Switch>
+        </div>
       </Container>
-    </div>
+    </Router>
   );
 }
 
